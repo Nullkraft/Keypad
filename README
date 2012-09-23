@@ -1,0 +1,19 @@
+Keypad Library for Arduino
+Author:  Mark Stanley, Alexander Brevig
+Contact: mstanley@technologist.com, alexanderbrevig@gmail.com
+
+The Keypad library is designed for driving matrix style keypads when using the Arduino platform. It uses the standard method of selecting a column and scanning all the rows to see which key may be pressed. Support is provided for various size keypads (or matrix style keyboards) up to 160 keys with a maximum of 16 columns and 10 rows. You can expand beyond that if you are willing to make minor changes to the library.
+
+Features of this library are:
+	Allows multiple, simultaneous, keypresses. (Current max of 10 keys at one time.)
+	Backwards compatible with previous single-key methods.
+	Has a built-in state-machine to debounce the keys without slowing down your code.
+
+
+Version 3.0 	2012-07-12 - Mark Stanley:
+				Made library multi-keypress by default. (Backwards compatible)
+
+
+You can get more information about matrix keypads and how to connect them to your Arduino on the playground:
+
+http://arduino.cc/playground/Code/Keypad
