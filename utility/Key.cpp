@@ -32,22 +32,22 @@
 
 // default constructor
 Key::Key() {
-	kchar = NO_KEY;
-	kstate = IDLE;
-	stateChanged = false;
+    kchar = NO_KEY;
+    kstate = IDLE;
+    stateChanged = false;
 }
 
 // constructor
 Key::Key(char userKeyChar) {
-	kchar = userKeyChar;
-	kstate = IDLE;
-	stateChanged = false;
+    kchar = userKeyChar;
+    kstate = IDLE;
+    stateChanged = false;
 }
 
 void Key::key_update (char userKeyChar, KeyState userState, boolean userStatus) {
-	kchar = userKeyChar;
-	kstate = userState;
-	stateChanged = userStatus;
+    kchar = userKeyChar;
+    kstate = userState;
+    stateChanged = userStatus;
 }
 
 
