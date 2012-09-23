@@ -61,8 +61,8 @@ typedef struct {
     byte columns;
 } KeypadSize;
 
-#define LIST_MAX 10		// Max number of keys on the active list.
-#define MAPSIZE 10		// MAPSIZE is the number of rows (times 16 columns)
+#define LIST_MAX 10        // Max number of keys on the active list.
+#define MAPSIZE 10        // MAPSIZE is the number of rows (times 16 columns)
 #define makeKeymap(x) ((char*)x)
 
 
@@ -70,44 +70,44 @@ typedef struct {
 class Keypad : public Key {
 public:
 
-	Keypad(char *userKeymap, byte *row, byte *col, byte numRows, byte numCols);
+    Keypad(char *userKeymap, byte *row, byte *col, byte numRows, byte numCols);
 
-	virtual void pin_mode(byte pinNum, byte mode) { pinMode(pinNum, mode); }
-	virtual void pin_write(byte pinNum, boolean level) { digitalWrite(pinNum, level); }
-	virtual int  pin_read(byte pinNum) { return digitalRead(pinNum); }
+    virtual void pin_mode(byte pinNum, byte mode) { pinMode(pinNum, mode); }
+    virtual void pin_write(byte pinNum, boolean level) { digitalWrite(pinNum, level); }
+    virtual int  pin_read(byte pinNum) { return digitalRead(pinNum); }
 
-	uint bitMap[MAPSIZE];	// 10 row x 16 column array of bits.
-	Key key[LIST_MAX];
-	unsigned long holdTimer;
+    uint bitMap[MAPSIZE];    // 10 row x 16 column array of bits.
+    Key key[LIST_MAX];
+    unsigned long holdTimer;
 
-	char getKey();
-	bool getKeys();
-	KeyState getState();
-	void begin(char *userKeymap);
-	bool isPressed(char keyChar);
-	void setDebounceTime(uint);
-	void setHoldTime(uint);
-	void addEventListener(void (*listener)(char));
-	int findInList(char keyChar);
-	char waitForKey();
-	bool keyStateChanged();
-	byte numKeys();
+    char getKey();
+    bool getKeys();
+    KeyState getState();
+    void begin(char *userKeymap);
+    bool isPressed(char keyChar);
+    void setDebounceTime(uint);
+    void setHoldTime(uint);
+    void addEventListener(void (*listener)(char));
+    int findInList(char keyChar);
+    char waitForKey();
+    bool keyStateChanged();
+    byte numKeys();
 
 private:
-	unsigned long startTime;
-	char *keymap;
+    unsigned long startTime;
+    char *keymap;
     byte *rowPins;
     byte *columnPins;
-	KeypadSize sizeKpd;
-	uint debounceTime;
-	uint holdTime;
+    KeypadSize sizeKpd;
+    uint debounceTime;
+    uint holdTime;
 
-	bool scanKeys();
-	void updateList();
-	void setKeyState(byte n, boolean button);
-	void transitionTo(byte n, KeyState nextState);
-	void initializePins();
-	void (*keypadEventListener)(char);
+    bool scanKeys();
+    void updateList();
+    void setKeyState(byte n, boolean button);
+    void transitionTo(byte n, KeyState nextState);
+    void initializePins();
+    void (*keypadEventListener)(char);
 };
 
 #endif
