@@ -34,7 +34,7 @@
 
 // Arduino versioning.
 #if defined(ARDUINO) && ARDUINO >= 100
-#include "Arduino.h"    // for digitalRead, digitalWrite, etc
+#include "Arduino.h"	// for digitalRead, digitalWrite, etc
 #else
 #include "WProgram.h"
 #endif
@@ -46,18 +46,20 @@ typedef unsigned int uint;
 typedef enum{ IDLE, PRESSED, HOLD, RELEASED } KeyState;
 
 const char NO_KEY = '\0';
+const int UNASSIGNED=-1;        // kcode is not assigned.
 
 class Key {
 public:
-    // members
-    char kchar;
-    KeyState kstate;
-    boolean stateChanged;
+	// members
+	char kchar;
+	int kcode;
+	KeyState kstate;
+	boolean stateChanged;
 
-    // methods
-    Key();
-    Key(char userKeyChar);
-    void key_update(char userKeyChar, KeyState userState, boolean userStatus);
+	// methods
+	Key();
+	Key(char userKeyChar);
+	void key_update(char userKeyChar, KeyState userState, boolean userStatus);
 
 private:
 
