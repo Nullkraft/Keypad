@@ -244,6 +244,13 @@ void Keypad::addEventListener(void (*listener)(char)){
 	keypadEventListener = listener;
 }
 
+//adds a new event listener that is given the key and key state as parameters
+//this way you can actually tell what is going on with the key that is being passed
+//in without crawling through they internal data structures...
+void Keypad::addStatedEventListener(void (*listener)(char, KeyState)){
+	keypadStatedEventListener = listener;
+}
+
 void Keypad::transitionTo(byte idx, KeyState nextState) {
 	key[idx].kstate = nextState;
 	key[idx].stateChanged = true;
@@ -254,12 +261,22 @@ void Keypad::transitionTo(byte idx, KeyState nextState) {
 	  	if ( (keypadEventListener!=NULL) && (idx==0) )  {
 			keypadEventListener(key[0].kchar);
 		}
+		//call the event listener that contains the key state, if available
+		if ( (keypadStatedEventListener!=NULL) && (idx==0) )
+		{
+			keypadStatedEventListener(key[0].kchar, nextState);
+		}
 	}
 	// Sketch used the getKeys() function.
 	// Calls keypadEventListener on any key that changes state.
 	else {
 	  	if (keypadEventListener!=NULL)  {
 			keypadEventListener(key[idx].kchar);
+		}
+		//call the event listener that contains the key state, if available
+		if (keypadStatedEventListener!=NULL)
+		{
+			keypadStatedEventListener(key[idx].kchar, nextState);
 		}
 	}
 }

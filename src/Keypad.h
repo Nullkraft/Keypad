@@ -100,6 +100,7 @@ public:
 	void setDebounceTime(uint);
 	void setHoldTime(uint);
 	void addEventListener(void (*listener)(char));
+	void addStatedEventListener(void (*listener)(char, KeyState));	
 	int findInList(char keyChar);
 	int findInList(int keyCode);
 	char waitForKey();
@@ -121,12 +122,14 @@ private:
 	void nextKeyState(byte n, boolean button);
 	void transitionTo(byte n, KeyState nextState);
 	void (*keypadEventListener)(char);
+	void (*keypadStatedEventListener)(char, KeyState);
 };
 
 #endif
 
 /*
 || @changelog
+|| | 3.2 2015-08-17 - Tim Trzepacz     : Added "stated" event listener that also receives key state as a parameter.
 || | 3.1.0 2015-06-16 - Mark Stanley  : Changed versioning scheme to comply with Arduino library.properties file.
 || | 3.1 2013-01-15 - Mark Stanley     : Fixed missing RELEASED & IDLE status when using a single key.
 || | 3.0 2012-07-12 - Mark Stanley     : Made library multi-keypress by default. (Backwards compatible)
