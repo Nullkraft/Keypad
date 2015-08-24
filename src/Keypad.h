@@ -1,9 +1,9 @@
 /*
 ||
 || @file Keypad.h
-|| @version 3.1.0
-|| @author Mark Stanley, Alexander Brevig
-|| @contact mstanley@technologist.com, alexanderbrevig@gmail.com
+|| @version 3.2.0
+|| @author Mark Stanley, Alexander Brevig, Tim Trzepacz
+|| @contact mstanley@technologist.com, alexanderbrevig@gmail.com, github@softegg.com
 ||
 || @description
 || | This library provides a simple interface for using matrix

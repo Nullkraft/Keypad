@@ -1,9 +1,9 @@
 /*
 ||
 || @file Keypad.cpp
-|| @version 3.1.0
-|| @author Mark Stanley, Alexander Brevig
-|| @contact mstanley@technologist.com, alexanderbrevig@gmail.com
+|| @version 3.2.0
+|| @author Mark Stanley, Alexander Brevig, Tim Trzepacz
+|| @contact mstanley@technologist.com, alexanderbrevig@gmail.com, github@softegg.com
 ||
 || @description
 || | This library provides a simple interface for using matrix
@@ -283,6 +283,7 @@ void Keypad::transitionTo(byte idx, KeyState nextState) {
 
 /*
 || @changelog
+|| | 3.2.0 2015-08-23 - Tim Trzepacz  : Added Stated Event Listener
 || | 3.1.0 2015-06-16 - Mark Stanley  : Changed versioning scheme to comply with Arduino library.properties file.
 || | 3.1 2013-01-15 - Mark Stanley     : Fixed missing RELEASED & IDLE status when using a single key.
 || | 3.0 2012-07-12 - Mark Stanley     : Made library multi-keypress by default. (Backwards compatible)
