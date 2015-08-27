@@ -9,8 +9,8 @@ Features of this library are:
 	Has a built-in state-machine to debounce the keys without slowing down your code.
 
 
-Version 3.0 	2012-07-12 - Mark Stanley:
-	Made library multi-keypress by default. (Backwards compatible)
+Version 3.2 	3.2 2015-08-17 - Tim Trzepacz:
+        Added "stated" event listener that also receives key state as a parameter.
 
 
 You can get more information about matrix keypads and how to connect them to your Arduino on the playground:
