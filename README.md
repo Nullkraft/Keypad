@@ -9,7 +9,7 @@ Features of this library are:
 	Has a built-in state-machine to debounce the keys without slowing down your code.
 
 
-Version 3.2 	3.2 2015-08-17 - Tim Trzepacz:
+Version 3.2 	2015-08-17 - Tim Trzepacz:
         Added "stated" event listener that also receives key state as a parameter.
 
 
