@@ -9,8 +9,17 @@
         - "~/.platformio"
  
  env:
+    - PLATFORMIO_CI_SRC=examples/CustomKeypad/CustomKeypad.ino
+    - PLATFORMIO_CI_SRC=examples/DynamicKeypad/DynamicKeypad.ino
+    - PLATFORMIO_CI_SRC=examples/DynamicKeypadStated/DynamicKeypadStated.ino
+    - PLATFORMIO_CI_SRC=examples/EventKeypad/EventKeypad.ino
+    - PLATFORMIO_CI_SRC=examples/EventKeypadStated/EventKeypadStated.ino
+    - PLATFORMIO_CI_SRC=examples/HelloKeypad/HelloKeypad.ino
+    - PLATFORMIO_CI_SRC=examples/HelloKeypad3/HelloKeypad3.ino
+    - PLATFORMIO_CI_SRC=examples/loopCounter/loopCounter.ino
     - PLATFORMIO_CI_SRC=examples/MultiKey/MultiKey.ino
- 
+    - PLATFORMIO_CI_SRC=examples/MultiKeyStated/MultiKeyStated.ino
+    
  install:
     - pip install -U platformio
  
