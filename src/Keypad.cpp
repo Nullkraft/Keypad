@@ -29,7 +29,7 @@
 || #
 ||
 */
-#include <Keypad.h>
+#include "Keypad.h"
 
 // <<constructor>> Allows custom keymap, pin configuration, and keypad sizes.
 Keypad::Keypad(char *userKeymap, byte *row, byte *col, byte numRows, byte numCols) {
@@ -283,6 +283,7 @@ void Keypad::transitionTo(byte idx, KeyState nextState) {
 
 /*
 || @changelog
+|| | 3.2.0 2015-12-30 - Mark Stanley  : Started using Travis CI
 || | 3.2.0 2015-08-23 - Tim Trzepacz  : Added Stated Event Listener
 || | 3.1.0 2015-06-16 - Mark Stanley  : Changed versioning scheme to comply with Arduino library.properties file.
 || | 3.1 2013-01-15 - Mark Stanley     : Fixed missing RELEASED & IDLE status when using a single key.
