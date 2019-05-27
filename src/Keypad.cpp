@@ -285,6 +285,7 @@ void Keypad::transitionTo(byte idx, KeyState nextState) {
 
 /*
 || @changelog
+|| | 3.2.0 2019-05-26 - Mark Stanley  : Fixed compatibility issue with the ESP8266 in waitForKey().
 || | 3.2.0 2015-12-30 - Mark Stanley  : Started using Travis CI
 || | 3.2.0 2015-08-23 - Tim Trzepacz  : Added Stated Event Listener
 || | 3.1.0 2015-06-16 - Mark Stanley  : Changed versioning scheme to comply with Arduino library.properties file.
