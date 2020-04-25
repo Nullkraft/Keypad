@@ -61,8 +61,12 @@ do {							 \
 #endif
 
 
-#define OPEN LOW
-#define CLOSED HIGH
+#ifndef KEYPAD_OPEN
+    #define KEYPAD_OPEN LOW
+#endif
+#ifndef KEYPAD_CLOSED
+    #define KEYPAD_CLOSED HIGH
+#endif
 
 typedef char KeypadEvent;
 typedef unsigned int uint;
@@ -75,8 +79,23 @@ typedef struct {
     byte columns;
 } KeypadSize;
 
-#define LIST_MAX 10		// Max number of keys on the active list.
-#define MAPSIZE 10		// MAPSIZE is the number of rows (times 16 columns)
+#ifndef KEYPAD_LIST_MAX
+    #define KEYPAD_LIST_MAX 10		// Max number of keys on the active list.
+#endif
+
+#ifndef KEYPAD_MAPSIZE
+    #define KEYPAD_MAPSIZE 10		// KEYPAD_MAPSIZE is the number of rows (times 16 columns)
+#endif
+
+// #define KEYPAD_SHIFTIN_ENABLE          // Use shift register to read the row values
+// #define KEYPAD_SHIFTIN_DATAPIN
+// #define KEYPAD_SHIFTIN_CLOCKPIN
+// #define KEYPAD_SHIFTIN_LATCHPIN
+// #define KEYPAD_SHIFTOUT_ENABLE          // Use shift register to write the column values
+// #define KEYPAD_SHIFTOUT_DATAPIN
+// #define KEYPAD_SHIFTOUT_CLOCKPIN
+// #define KEYPAD_SHIFTOUT_LATCHPIN
+
 #define makeKeymap(x) ((char*)x)
 
 
@@ -86,12 +105,12 @@ public:
 
 	Keypad(char *userKeymap, byte *row, byte *col, byte numRows, byte numCols);
 
-	virtual void pin_mode(byte pinNum, byte mode) { pinMode(pinNum, mode); }
-	virtual void pin_write(byte pinNum, boolean level) { digitalWrite(pinNum, level); }
-	virtual int  pin_read(byte pinNum) { return digitalRead(pinNum); }
+    virtual void pin_mode(byte pinNum, byte mode) { pinMode(pinNum, mode); }
+    virtual void pin_write(byte pinNum, boolean level) { digitalWrite(pinNum, level); }
+    virtual int pin_read(byte pinNum) { return digitalRead(pinNum); }
 
-	uint bitMap[MAPSIZE];	// 10 row x 16 column array of bits. Except Due which has 32 columns.
-	Key key[LIST_MAX];
+    uint bitMap[KEYPAD_MAPSIZE];	// 10 row x 16 column array of bits. Except Due which has 32 columns.
+	Key key[KEYPAD_LIST_MAX];
 	unsigned long holdTimer;
 
 	char getKey();
