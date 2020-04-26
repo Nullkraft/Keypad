@@ -32,13 +32,9 @@
 #include "Keypad.h"
 
 // <<constructor>> Allows custom keymap, pin configuration, and keypad sizes.
-Keypad::Keypad(char *userKeymap, byte *row, byte *col, byte numRows, byte numCols) {
+Keypad::Keypad(const byte *row, const byte *col, const byte numRows, const byte numCols): sizeKpd{numRows, numCols} {
 	rowPins = row;
 	columnPins = col;
-	sizeKpd.rows = numRows;
-	sizeKpd.columns = numCols;
-
-	begin(userKeymap);
 
 	setDebounceTime(10);
 	setHoldTime(500);
@@ -49,20 +45,23 @@ Keypad::Keypad(char *userKeymap, byte *row, byte *col, byte numRows, byte numCol
 }
 
 // Let the user define a keymap - assume the same row/column count as defined in constructor
-void Keypad::begin(char *userKeymap) {
+void Keypad::begin(const char *userKeymap) {
     keymap = userKeymap;
+    initRowPins();
+    initColumnPins();
+}
 
-    #ifdef KEYPAD_SHIFTIN_ENABLE
-        pin_mode(KEYPAD_SHIFTIN_DATAPIN, INPUT);
-        pin_mode(KEYPAD_SHIFTIN_CLOCKPIN, OUTPUT);
-        pin_mode(KEYPAD_SHIFTIN_LATCHPIN, OUTPUT);
-    #endif
+void Keypad::initRowPins() {
+    for (byte r=0; r<sizeKpd.rows; r++) {
+        pin_mode(rowPins[r], INPUT_PULLUP);
+    }
+}
 
-    #ifdef KEYPAD_SHIFTOUT_ENABLE
-        pin_mode(KEYPAD_SHIFTOUT_DATAPIN, OUTPUT);
-        pin_mode(KEYPAD_SHIFTOUT_CLOCKPIN, OUTPUT);
-        pin_mode(KEYPAD_SHIFTOUT_LATCHPIN, OUTPUT);
-    #endif
+void Keypad::initColumnPins() {
+    for (byte c=0; c<sizeKpd.columns; c++) {
+        pin_mode(columnPins[c], OUTPUT);
+        pin_write(columnPins[c], HIGH);
+    }
 }
 
 // Returns a single key only. Retained for backwards compatibility.
@@ -74,7 +73,7 @@ char Keypad::getKey() {
 	
 	single_key = false;
 
-	return NO_KEY;
+	return KEYPAD_NO_KEY;
 }
 
 // Populate the key list.
@@ -91,50 +90,32 @@ bool Keypad::getKeys() {
 	return keyActivity;
 }
 
+void Keypad::writeColumnPre(byte n) {
+    pin_write(columnPins[n], LOW);
+}
+
+void Keypad::writeColumnPost(byte n) {
+    pin_write(columnPins[n], HIGH);
+}
+
+bool Keypad::readRow(byte n) {
+    return !pin_read(rowPins[n]);
+}
+
 // Private : Hardware scan
 void Keypad::scanKeys() {
-	// Re-intialize the row pins. Allows sharing these pins with other hardware.
-    #ifndef KEYPAD_SHIFTIN_ENABLE
-        for (byte r=0; r<sizeKpd.rows; r++) {
-            pin_mode(rowPins[r],INPUT_PULLUP);
-        }
-    #endif
-
 	// bitMap stores ALL the keys that are being pressed.
 	for (byte c=0; c<sizeKpd.columns; c++) {
-        #ifdef KEYPAD_SHIFTOUT_ENABLE
-            pin_write(KEYPAD_SHIFTOUT_LATCHPIN, LOW);
-            shiftOut(KEYPAD_SHIFTOUT_DATAPIN, KEYPAD_SHIFTOUT_CLOCKPIN, LSBFIRST, (1 << c));
-            pin_write(KEYPAD_SHIFTOUT_LATCHPIN, HIGH);
-        #else
-            pin_mode(columnPins[c], OUTPUT);
-            # ifdef KEYPAD_SHIFTIN_ENABLE
-                pin_write(columnPins[c], HIGH);	// Begin column pulse output.
-            #else
-                pin_write(columnPins[c], LOW);	// Begin column pulse output.
-            #endif
-        #endif
-
-        #ifdef KEYPAD_SHIFTIN_ENABLE
-            pin_write(KEYPAD_SHIFTIN_LATCHPIN, HIGH);
-            delayMicroseconds(2);
-            pin_write(KEYPAD_SHIFTIN_LATCHPIN, LOW);
-
-            byte shiftIn_buf = shiftIn(KEYPAD_SHIFTIN_DATAPIN, KEYPAD_SHIFTIN_CLOCKPIN, MSBFIRST);
-            Serial.println(shiftIn_buf);
-        #endif
+        // Begin column pulse output.
+        writeColumnPre(c);
 
 		for (byte r=0; r<sizeKpd.rows; r++) {
-            #ifdef KEYPAD_SHIFTIN_ENABLE
-                bitWrite(bitMap[r], c, shiftIn_buf & (1 << r));
-            #else
-                bitWrite(bitMap[r], c, !pin_read(rowPins[r]));  // keypress is active low so invert to high.
-            #endif
+            bitWrite(bitMap[r], c, readRow(r));
 		}
 
-		// Set pin to high impedance input. Effectively ends column pulse.
-		pin_write(columnPins[c],HIGH);
-		pin_mode(columnPins[c],INPUT);
+		// End column pulse.
+		writeColumnPost(c);
+//		pin_write(columnPins[c],HIGH);
 	}
 }
 
@@ -146,7 +127,7 @@ bool Keypad::updateList() {
 	// Delete any IDLE keys
 	for (byte i=0; i < KEYPAD_LIST_MAX; i++) {
 		if (key[i].kstate==IDLE) {
-			key[i].kchar = NO_KEY;
+			key[i].kchar = KEYPAD_NO_KEY;
 			key[i].kcode = -1;
 			key[i].stateChanged = false;
 		}
@@ -166,7 +147,7 @@ bool Keypad::updateList() {
 			// Key is NOT on the list so add it.
 			if ((idx == -1) && button) {
 				for (byte i=0; i < KEYPAD_LIST_MAX; i++) {
-					if (key[i].kchar==NO_KEY) {		// Find an empty slot or don't add key to list.
+					if (key[i].kchar == KEYPAD_NO_KEY) {		// Find an empty slot or don't add key to list.
 						key[i].kchar = keyChar;
 						key[i].kcode = keyCode;
 						key[i].kstate = IDLE;		// Keys NOT on the list have an initial state of IDLE.
@@ -248,9 +229,9 @@ int Keypad::findInList (int keyCode) {
 
 // New in 2.0
 char Keypad::waitForKey() {
-	char waitKey = NO_KEY;
+	char waitKey = KEYPAD_NO_KEY;
 
-	while( (waitKey = getKey()) == NO_KEY ) {}	// Block everything while waiting for a keypress.
+	while((waitKey = getKey()) == KEYPAD_NO_KEY ) {}	// Block everything while waiting for a keypress.
 
 	return waitKey;
 }
@@ -324,6 +305,7 @@ void Keypad::transitionTo(byte idx, KeyState nextState) {
 
 /*
 || @changelog
+|| | 3.3.0 2020-04-26 - Dimitris Zervas  : Add support for shift registers
 || | 3.2.0 2019-05-26 - Mark Stanley  : Fixed compatibility issue with the ESP8266 in waitForKey().
 || | 3.2.0 2015-12-30 - Mark Stanley  : Started using Travis CI
 || | 3.2.0 2015-08-23 - Tim Trzepacz  : Added Stated Event Listener

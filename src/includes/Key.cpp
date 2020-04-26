@@ -32,7 +32,7 @@
 
 // default constructor
 Key::Key() {
-	kchar = NO_KEY;
+	kchar = KEYPAD_NO_KEY;
 	kstate = IDLE;
 	stateChanged = false;
 }
@@ -40,7 +40,7 @@ Key::Key() {
 // constructor
 Key::Key(char userKeyChar) {
 	kchar = userKeyChar;
-	kcode = UNASSIGNED;
+	kcode = KEYPAD_UNASSIGNED;
 	kstate = IDLE;
 	stateChanged = false;
 }
