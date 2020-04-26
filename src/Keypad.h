@@ -61,12 +61,8 @@ do {							  \
 #endif
 
 
-#ifndef KEYPAD_OPEN
-    #define KEYPAD_OPEN LOW
-#endif
-#ifndef KEYPAD_CLOSED
-    #define KEYPAD_CLOSED HIGH
-#endif
+#define KEYPAD_OPEN LOW
+#define KEYPAD_CLOSED HIGH
 
 typedef char KeypadEvent;
 typedef unsigned int uint;
@@ -79,27 +75,8 @@ typedef struct {
     const byte columns;
 } KeypadSize;
 
-#ifndef KEYPAD_LIST_MAX
-    #define KEYPAD_LIST_MAX 10		// Max number of keys on the active list.
-#endif
-
-#ifndef KEYPAD_MAPSIZE
-    #define KEYPAD_MAPSIZE 10		// KEYPAD_MAPSIZE is the number of rows (times 16 columns)
-#endif
-
-#ifndef KEYPAD_SHIFTIN_ENABLE
-    #define KEYPAD_SHIFTIN_ENABLE 0          // Use shift register to read the row values
-//    #define KEYPAD_SHIFTIN_DATAPIN -1
-//    #define KEYPAD_SHIFTIN_CLOCKPIN -1
-//    #define KEYPAD_SHIFTIN_LATCHPIN -1
-#endif
-
-#ifndef KEYPAD_SHIFTOUT_ENABLE
-    #define KEYPAD_SHIFTOUT_ENABLE 0          // Use shift register to write the column values
-//    #define KEYPAD_SHIFTOUT_DATAPIN -1
-//    #define KEYPAD_SHIFTOUT_CLOCKPIN -1
-//    #define KEYPAD_SHIFTOUT_LATCHPIN -1
-#endif
+#define KEYPAD_LIST_MAX 10		// Max number of keys on the active list.
+#define KEYPAD_MAPSIZE 10		// KEYPAD_MAPSIZE is the number of rows (times 16 columns)
 
 #define makeKeymap(x) ((const char*)x)
 
