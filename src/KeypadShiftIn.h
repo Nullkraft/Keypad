@@ -1,7 +1,3 @@
-//
-// Created by dzervas on 4/26/20.
-//
-
 #ifndef KEYPADSHIFTIN_H
 #define KEYPADSHIFTIN_H
 
