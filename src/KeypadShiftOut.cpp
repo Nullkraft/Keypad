@@ -18,8 +18,8 @@ void KeypadShiftOut::initColumnPins() {
 
 void KeypadShiftOut::writeColumnPre(byte n) {
     pin_write(outLatchPin, LOW);
-    shiftOut(outDataPin, outClockPin, LSBFIRST, (1 << n));
+    shiftOut(outDataPin, outClockPin, MSBFIRST, (1 << n));
     pin_write(outLatchPin, HIGH);
 }
 
-//void KeypadShiftOut::writeColumnPost(byte n) {}
+void KeypadShiftOut::writeColumnPost(byte n) {}

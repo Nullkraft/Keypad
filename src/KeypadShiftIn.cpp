@@ -24,7 +24,7 @@ bool KeypadShiftIn::readRow(byte n) {
         delayMicroseconds(1);
         pin_write(inLatchPin, LOW);
 
-        inBuffer = shiftIn(inDataPin, inClockPin, LSBFIRST);
+        inBuffer = shiftIn(inDataPin, inClockPin, MSBFIRST);
     }
 
     return (inBuffer & (1 << n)) == 0;

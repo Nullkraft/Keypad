@@ -115,7 +115,6 @@ void Keypad::scanKeys() {
 
 		// End column pulse.
 		writeColumnPost(c);
-//		pin_write(columnPins[c],HIGH);
 	}
 }
 

@@ -17,6 +17,7 @@ private:
 
     void initColumnPins();
     void writeColumnPre(byte n);
+    void writeColumnPost(byte n);
 };
 
 
