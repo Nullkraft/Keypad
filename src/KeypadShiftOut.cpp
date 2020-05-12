@@ -6,16 +6,16 @@ KeypadShiftOut::KeypadShiftOut(const byte *col, const byte numRows, const byte n
     this->outLatchPin = outLatchPin;
 }
 
-void KeypadShiftOut::initColumnPins() {
+void KeypadShiftOut::initRowPins() {
     pin_mode(outDataPin, OUTPUT);
     pin_mode(outClockPin, OUTPUT);
     pin_mode(outLatchPin, OUTPUT);
 }
 
-void KeypadShiftOut::writeColumnPre(byte n) {
+void KeypadShiftOut::writeRowPre(byte n) {
     pin_write(outLatchPin, LOW);
     shiftOut(outDataPin, outClockPin, MSBFIRST, (1 << n));
     pin_write(outLatchPin, HIGH);
 }
 
-void KeypadShiftOut::writeColumnPost(byte n) {}
+void KeypadShiftOut::writeRowPost(byte n) {}

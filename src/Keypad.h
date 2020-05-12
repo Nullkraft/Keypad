@@ -76,7 +76,7 @@ typedef struct {
 } KeypadSize;
 
 #define KEYPAD_LIST_MAX 10		// Max number of keys on the active list.
-#define KEYPAD_MAPSIZE 10		// KEYPAD_MAPSIZE is the number of rows (times 16 columns)
+#define KEYPAD_MAPSIZE 5		// KEYPAD_MAPSIZE is the number of rows (times 16 columns)
 
 #define makeKeymap(x) ((const char*)x)
 
@@ -125,8 +125,8 @@ private:
 	void transitionTo(byte n, KeyState nextState);
     virtual void initColumnPins();
 	virtual void initRowPins();
-    virtual void writeColumnPre(byte n);
-    virtual void writeColumnPost(byte n);
+    virtual void writeRowPre(byte n);
+    virtual void writeRowPost(byte n);
     virtual bool readRow(byte n);
 	void (*keypadEventListener)(char);
 	void (*keypadStatedEventListener)(char, KeyState);

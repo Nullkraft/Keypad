@@ -53,14 +53,14 @@ void Keypad::begin(const char *userKeymap) {
 
 void Keypad::initRowPins() {
     for (byte r=0; r<sizeKpd.rows; r++) {
-        pin_mode(rowPins[r], INPUT_PULLUP);
+        pin_mode(rowPins[r], OUTPUT);
+        pin_write(rowPins[r], HIGH);
     }
 }
 
 void Keypad::initColumnPins() {
     for (byte c=0; c<sizeKpd.columns; c++) {
-        pin_mode(columnPins[c], OUTPUT);
-        pin_write(columnPins[c], HIGH);
+        pin_mode(columnPins[c], INPUT_PULLUP);
     }
 }
 
@@ -90,12 +90,12 @@ bool Keypad::getKeys() {
 	return keyActivity;
 }
 
-void Keypad::writeColumnPre(byte n) {
-    pin_write(columnPins[n], LOW);
+void Keypad::writeRowPre(byte n) {
+    pin_write(rowPins[n], LOW);
 }
 
-void Keypad::writeColumnPost(byte n) {
-    pin_write(columnPins[n], HIGH);
+void Keypad::writeRowPost(byte n) {
+    pin_write(rowPins[n], HIGH);
 }
 
 bool Keypad::readRow(byte n) {
@@ -105,16 +105,16 @@ bool Keypad::readRow(byte n) {
 // Private : Hardware scan
 void Keypad::scanKeys() {
 	// bitMap stores ALL the keys that are being pressed.
-	for (byte c=0; c<sizeKpd.columns; c++) {
+	for (byte r=0; r<sizeKpd.rows; r++) {
         // Begin column pulse output.
-        writeColumnPre(c);
+        writeRowPre(r);
 
-		for (byte r=0; r<sizeKpd.rows; r++) {
-            bitWrite(bitMap[r], c, readRow(r));
+		for (byte c=0; c<sizeKpd.columns; c++) {
+            bitWrite(bitMap[r], c, readRow(c));
 		}
 
 		// End column pulse.
-		writeColumnPost(c);
+        writeRowPost(r);
 	}
 }
 

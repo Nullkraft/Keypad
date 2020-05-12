@@ -12,7 +12,7 @@ private:
     uint32_t inLatchPin;
     uint32_t inBuffer = 0;
 
-    void initRowPins();
+    void initColumnPins();
     bool readRow(byte n);
 };
 

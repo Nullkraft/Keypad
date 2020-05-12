@@ -11,9 +11,9 @@ private:
     uint32_t outClockPin;
     uint32_t outLatchPin;
 
-    void initColumnPins();
-    void writeColumnPre(byte n);
-    void writeColumnPost(byte n);
+    void initRowPins();
+    void writeRowPre(byte n);
+    void writeRowPost(byte n);
 };
 
 
