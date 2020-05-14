@@ -44,11 +44,11 @@ bool KeypadShiftIn::readRow(byte n) {
         pin_write(inLatchPin, LOW);
     }
 
-    // Handle daisy-chained shift registers
-    if (n % 8 == 0) {
-        uint32_t tmp = shiftIn(inDataPin, inClockPin, MSBFIRST);
-        this->inBuffer = tmp;
-    }
+    byte ndiv = n % 8;
 
-    return (this->inBuffer & (1 << (n % 8))) == 0;
+    // Handle daisy-chained shift registers
+    if (ndiv == 0)
+        this->inBuffer = shiftIn(inDataPin, inClockPin, MSBFIRST);
+
+    return (this->inBuffer & (1 << ndiv)) == 0;
 }
