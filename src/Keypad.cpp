@@ -110,7 +110,7 @@ void Keypad::scanKeys() {
         writeRowPre(r);
 
 		for (byte c=0; c<sizeKpd.columns; c++) {
-            bitWrite(bitMap[r], c, readRow(c));
+            bitWrite(bitMap[c], r, readRow(c));
 		}
 
 		// End column pulse.

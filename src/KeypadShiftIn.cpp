@@ -10,7 +10,7 @@ uint32_t shiftIn(uint32_t ulDataPin, uint32_t ulClockPin, uint32_t ulBitOrder) {
         digitalWrite(ulClockPin, LOW);
         delayMicroseconds(2);
 
-        if ( ulBitOrder == LSBFIRST )
+        if (ulBitOrder == LSBFIRST)
             value |= digitalRead(ulDataPin) << i;
         else
             value |= digitalRead(ulDataPin) << (7 - i);
@@ -50,8 +50,6 @@ bool KeypadShiftIn::readRow(byte n) {
     if (n % 8 == 0) {
         uint32_t tmp = shiftIn(inDataPin, inClockPin, MSBFIRST);
         this->inBuffer = tmp;
-//        Serial.printf("%d: ", n);
-//        Serial.println(tmp, BIN);
     }
 
     return (this->inBuffer & (1 << (n % 8))) == 0;
