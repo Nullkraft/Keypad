@@ -8,7 +8,6 @@ uint32_t shiftIn(uint32_t ulDataPin, uint32_t ulClockPin, uint32_t ulBitOrder) {
 
     for (i=0; i < 8; ++i) {
         digitalWrite(ulClockPin, LOW);
-        delayMicroseconds(2);
 
         if (ulBitOrder == LSBFIRST)
             value |= digitalRead(ulDataPin) << i;
@@ -42,7 +41,6 @@ void KeypadShiftIn::initColumnPins() {
 bool KeypadShiftIn::readRow(byte n) {
     if (n == 0) {
         pin_write(inLatchPin, HIGH);
-        delayMicroseconds(20);
         pin_write(inLatchPin, LOW);
     }
 
