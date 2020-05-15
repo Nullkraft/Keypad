@@ -39,14 +39,14 @@
 #include "WProgram.h"
 #endif
 
-#define OPEN LOW
-#define CLOSED HIGH
+#define KEYPAD_OPEN LOW
+#define KEYPAD_CLOSED HIGH
 
 typedef unsigned int uint;
 typedef enum{ IDLE, PRESSED, HOLD, RELEASED } KeyState;
 
-const char NO_KEY = '\0';
-const int UNASSIGNED=-1;        // kcode is not assigned.
+#define KEYPAD_NO_KEY '\0'
+#define KEYPAD_UNASSIGNED -1
 
 class Key {
 public:
@@ -60,9 +60,6 @@ public:
 	Key();
 	Key(char userKeyChar);
 	void key_update(char userKeyChar, KeyState userState, boolean userStatus);
-
-private:
-
 };
 
 #endif

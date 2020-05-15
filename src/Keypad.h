@@ -48,21 +48,21 @@
 #warning "Using  pinMode() INPUT_PULLUP AVR emulation"
 #define INPUT_PULLUP 0x2
 #define pinMode(_pin, _mode) _mypinMode(_pin, _mode)
-#define _mypinMode(_pin, _mode)  \
-do {							 \
-	if(_mode == INPUT_PULLUP) { \
+#define _mypinMode(_pin, _mode)   \
+do {							  \
+	if (_mode == INPUT_PULLUP) {  \
 		pinMode(_pin, INPUT);     \
 		digitalWrite(_pin, 1);    \
-		}                         \
-	if(_mode != INPUT_PULLUP)	{ \
-		pinMode(_pin, _mode);	 \
-		}                      \
-}while(0)
+    }                             \
+	if (_mode != INPUT_PULLUP) {  \
+		pinMode(_pin, _mode);	  \
+    }                             \
+} while(0)
 #endif
 
 
-#define OPEN LOW
-#define CLOSED HIGH
+#define KEYPAD_OPEN LOW
+#define KEYPAD_CLOSED HIGH
 
 typedef char KeypadEvent;
 typedef unsigned int uint;
@@ -71,33 +71,34 @@ typedef unsigned long ulong;
 // Made changes according to this post http://arduino.cc/forum/index.php?topic=58337.0
 // by Nick Gammon. Thanks for the input Nick. It actually saved 78 bytes for me. :)
 typedef struct {
-    byte rows;
-    byte columns;
+    const byte rows;
+    const byte columns;
 } KeypadSize;
 
-#define LIST_MAX 10		// Max number of keys on the active list.
-#define MAPSIZE 10		// MAPSIZE is the number of rows (times 16 columns)
-#define makeKeymap(x) ((char*)x)
+#define KEYPAD_LIST_MAX 6		// Max number of keys on the active list.
+#define KEYPAD_MAPSIZE 5		// KEYPAD_MAPSIZE is the number of rows (times 16 columns)
+
+#define makeKeymap(x) ((const char*)x)
 
 
 //class Keypad : public Key, public HAL_obj {
 class Keypad : public Key {
 public:
 
-	Keypad(char *userKeymap, byte *row, byte *col, byte numRows, byte numCols);
+	Keypad(const byte *row, const byte *col, const byte numRows, const byte numCols);
 
-	virtual void pin_mode(byte pinNum, byte mode) { pinMode(pinNum, mode); }
-	virtual void pin_write(byte pinNum, boolean level) { digitalWrite(pinNum, level); }
-	virtual int  pin_read(byte pinNum) { return digitalRead(pinNum); }
+    void pin_mode(byte pinNum, byte mode) { pinMode(pinNum, mode); }
+    void pin_write(byte pinNum, boolean level) { digitalWrite(pinNum, level); }
+    int pin_read(byte pinNum) { return digitalRead(pinNum); }
 
-	uint bitMap[MAPSIZE];	// 10 row x 16 column array of bits. Except Due which has 32 columns.
-	Key key[LIST_MAX];
+    uint bitMap[KEYPAD_MAPSIZE];	// 10 row x 16 column array of bits. Except Due which has 32 columns.
+	Key key[KEYPAD_LIST_MAX];
 	unsigned long holdTimer;
 
 	char getKey();
 	bool getKeys();
 	KeyState getState();
-	void begin(char *userKeymap);
+	void begin(const char *userKeymap);
 	bool isPressed(char keyChar);
 	void setDebounceTime(uint);
 	void setHoldTime(uint);
@@ -111,10 +112,9 @@ public:
 
 private:
 	unsigned long startTime;
-	char *keymap;
-    byte *rowPins;
-    byte *columnPins;
-	KeypadSize sizeKpd;
+	const char *keymap;
+    const byte *rowPins;
+	const KeypadSize sizeKpd;
 	uint debounceTime;
 	uint holdTime;
 	bool single_key;
@@ -123,8 +123,16 @@ private:
 	bool updateList();
 	void nextKeyState(byte n, boolean button);
 	void transitionTo(byte n, KeyState nextState);
+    virtual void initColumnPins();
+	virtual void initRowPins();
+    virtual void writeRowPre(byte n);
+    virtual void writeRowPost(byte n);
+    virtual bool readRow(byte n);
 	void (*keypadEventListener)(char);
 	void (*keypadStatedEventListener)(char, KeyState);
+
+protected:
+    const byte *columnPins;
 };
 
 #endif
