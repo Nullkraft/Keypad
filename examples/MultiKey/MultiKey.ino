@@ -52,7 +52,7 @@ void loop() {
     // Returns true if there are ANY active keys.
     if (kpd.getKeys())
     {
-        for (int i=0; i < KEYPAD_LIST_MAX; i++)   // Scan the whole key list.
+        for (int i=0; i<LIST_MAX; i++)   // Scan the whole key list.
         {
             if ( kpd.key[i].stateChanged )   // Only find keys that have changed state.
             {

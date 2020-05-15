@@ -145,8 +145,8 @@ void loop() {
     }
 }
 
-static char virtKey = KEYPAD_NO_KEY;      // Stores the last virtual key press. (Alpha keys only)
-static char physKey = KEYPAD_NO_KEY;      // Stores the last physical key press. (Alpha keys only)
+static char virtKey = NO_KEY;      // Stores the last virtual key press. (Alpha keys only)
+static char physKey = NO_KEY;      // Stores the last physical key press. (Alpha keys only)
 static char buildStr[12];
 static byte buildCount;
 static byte pressCount;
