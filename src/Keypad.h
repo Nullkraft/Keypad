@@ -75,7 +75,7 @@ typedef struct {
     const byte columns;
 } KeypadSize;
 
-#define KEYPAD_LIST_MAX 10		// Max number of keys on the active list.
+#define KEYPAD_LIST_MAX 6		// Max number of keys on the active list.
 #define KEYPAD_MAPSIZE 5		// KEYPAD_MAPSIZE is the number of rows (times 16 columns)
 
 #define makeKeymap(x) ((const char*)x)

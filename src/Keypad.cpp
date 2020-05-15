@@ -99,7 +99,7 @@ void Keypad::writeRowPost(byte n) {
 }
 
 bool Keypad::readRow(byte n) {
-    return !pin_read(rowPins[n]);
+    return !pin_read(columnPins[n]);
 }
 
 // Private : Hardware scan
@@ -110,7 +110,7 @@ void Keypad::scanKeys() {
         writeRowPre(r);
 
 		for (byte c=0; c<sizeKpd.columns; c++) {
-            bitWrite(bitMap[c], r, readRow(c));
+            bitWrite(bitMap[r], c, readRow(c));
 		}
 
 		// End column pulse.
@@ -144,7 +144,7 @@ bool Keypad::updateList() {
 				nextKeyState(idx, button);
 			}
 			// Key is NOT on the list so add it.
-			if ((idx == -1) && button) {
+			if ((idx < 0) && button) {
 				for (byte i=0; i < KEYPAD_LIST_MAX; i++) {
 					if (key[i].kchar == KEYPAD_NO_KEY) {		// Find an empty slot or don't add key to list.
 						key[i].kchar = keyChar;
@@ -174,21 +174,21 @@ void Keypad::nextKeyState(byte idx, boolean button) {
 	switch (key[idx].kstate) {
 		case IDLE:
 			if (button == KEYPAD_CLOSED) {
-				transitionTo (idx, PRESSED);
+				transitionTo(idx, PRESSED);
 				holdTimer = millis(); }		// Get ready for next HOLD state.
 			break;
 		case PRESSED:
 			if ((millis()-holdTimer)>holdTime)	// Waiting for a key HOLD...
-				transitionTo (idx, HOLD);
+				transitionTo(idx, HOLD);
 			else if (button == KEYPAD_OPEN)				// or for a key to be RELEASED.
-				transitionTo (idx, RELEASED);
+				transitionTo(idx, RELEASED);
 			break;
 		case HOLD:
 			if (button == KEYPAD_OPEN)
-				transitionTo (idx, RELEASED);
+				transitionTo(idx, RELEASED);
 			break;
 		case RELEASED:
-			transitionTo (idx, IDLE);
+			transitionTo(idx, IDLE);
 			break;
 	}
 }
