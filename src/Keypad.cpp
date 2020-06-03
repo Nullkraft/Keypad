@@ -65,7 +65,7 @@ char Keypad::getKey() {
 	return NO_KEY;
 }
 
-// Populate the key list.
+// Update the key list whenever the user presses, holds or releases a key.
 bool Keypad::getKeys() {
 	bool keyActivity = false;
 
