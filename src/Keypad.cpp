@@ -59,7 +59,7 @@ char Keypad::getKey() {
 
 	if (getKeys() && key[0].stateChanged && (key[0].kstate==PRESSED))
 		return key[0].kchar;
-	
+
 	single_key = false;
 
 	return NO_KEY;
@@ -154,18 +154,18 @@ void Keypad::nextKeyState(byte idx, boolean button) {
 
 	switch (key[idx].kstate) {
 		case IDLE:
-			if (button==CLOSED) {
+			if (button==KEY_CLOSED) {
 				transitionTo (idx, PRESSED);
 				holdTimer = millis(); }		// Get ready for next HOLD state.
 			break;
 		case PRESSED:
 			if ((millis()-holdTimer)>holdTime)	// Waiting for a key HOLD...
 				transitionTo (idx, HOLD);
-			else if (button==OPEN)				// or for a key to be RELEASED.
+			else if (button==KEY_OPEN)		// or for a key to be RELEASED.
 				transitionTo (idx, RELEASED);
 			break;
 		case HOLD:
-			if (button==OPEN)
+			if (button==KEY_OPEN)
 				transitionTo (idx, RELEASED);
 			break;
 		case RELEASED:
