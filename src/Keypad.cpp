@@ -212,8 +212,8 @@ char Keypad::waitForKey() {
 	char waitKey = NO_KEY;
 	while( (waitKey = getKey()) == NO_KEY ) {	// Block everything while waiting for a keypress.
 		delay(0);								// DO NOT REMOVE! Prevents problems with ESP8266 Arduino boards.
-		return waitKey;
 	}
+	return waitKey;
 }
 
 // Backwards compatibility function.
