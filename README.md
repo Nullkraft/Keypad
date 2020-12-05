@@ -8,6 +8,8 @@ Features of this library are:
 	Backwards compatible with previous single-key methods.
 	Has a built-in state-machine to debounce the keys without slowing down your code.
 
+Online Wokwi Arduino Simulation link here: https://wokwi.com/arduino/projects/284084336653763080
+Use this link to play with the keypad source code
 
 Version 3.2 	2015-08-17 - Tim Trzepacz:
         Added "stated" event listener that also receives key state as a parameter.
