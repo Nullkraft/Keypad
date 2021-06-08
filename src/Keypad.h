@@ -90,7 +90,10 @@ public:
 	virtual void pin_write(byte pinNum, boolean level) { digitalWrite(pinNum, level); }
 	virtual int  pin_read(byte pinNum) { return digitalRead(pinNum); }
 
+private:
 	uint bitMap[MAPSIZE];	// 10 row x 16 column array of bits. Except Due which has 32 columns.
+
+public:
 	Key key[LIST_MAX];
 	unsigned long holdTimer;
 
@@ -131,8 +134,8 @@ private:
 
 /*
 || @changelog
-|| | 3.2.0 2015-08-17 - Tim Trzepacz     : Added "stated" event listener that also receives key state as a parameter.
-|| | 3.1.0 2015-06-16 - Mark Stanley  : Changed versioning scheme to comply with Arduino library.properties file.
+|| | 3.2.0 2015-08-17 - Tim Trzepacz   : Added "stated" event listener that also receives key state as a parameter.
+|| | 3.1.0 2015-06-16 - Mark Stanley   : Changed versioning scheme to comply with Arduino library.properties file.
 || | 3.1 2013-01-15 - Mark Stanley     : Fixed missing RELEASED & IDLE status when using a single key.
 || | 3.0 2012-07-12 - Mark Stanley     : Made library multi-keypress by default. (Backwards compatible)
 || | 3.0 2012-07-12 - Mark Stanley     : Modified pin functions to support Keypad_I2C

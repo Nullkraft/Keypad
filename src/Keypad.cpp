@@ -99,6 +99,7 @@ void Keypad::scanKeys() {
 	}
 }
 
+// Private
 // Manage the list without rearranging the keys. Returns true if any keys on the list changed state.
 bool Keypad::updateList() {
 
@@ -253,6 +254,7 @@ void Keypad::addStatedEventListener(void (*listener)(char, KeyState)){
 	keypadStatedEventListener = listener;
 }
 
+// Private
 void Keypad::transitionTo(byte idx, KeyState nextState) {
 	key[idx].kstate = nextState;
 	key[idx].stateChanged = true;
@@ -260,7 +262,7 @@ void Keypad::transitionTo(byte idx, KeyState nextState) {
 	// Sketch used the getKey() function.
 	// Calls keypadEventListener only when the first key in slot 0 changes state.
 	if (single_key)  {
-	  	if ( (keypadEventListener!=NULL) && (idx==0) )  {
+    if ( (keypadEventListener!=NULL) && (idx==0) )  {
 			keypadEventListener(key[0].kchar);
 		}
 		//call the event listener that contains the key state, if available
@@ -272,7 +274,7 @@ void Keypad::transitionTo(byte idx, KeyState nextState) {
 	// Sketch used the getKeys() function.
 	// Calls keypadEventListener on any key that changes state.
 	else {
-	  	if (keypadEventListener!=NULL)  {
+  	if (keypadEventListener!=NULL)  {
 			keypadEventListener(key[idx].kchar);
 		}
 		//call the event listener that contains the key state, if available
