@@ -56,12 +56,10 @@ public:
 	KeyState kstate;
 	boolean stateChanged;
 
+public:
 	// methods
 	Key();
 	Key(char userKeyChar);
-	void key_update(char userKeyChar, KeyState userState, boolean userStatus);
-
-private:
 
 };
 

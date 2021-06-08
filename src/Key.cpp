@@ -46,14 +46,6 @@ Key::Key(char userKeyChar) {
 }
 
 
-void Key::key_update (char userKeyChar, KeyState userState, boolean userStatus) {
-	kchar = userKeyChar;
-	kstate = userState;
-	stateChanged = userStatus;
-}
-
-
-
 /*
 || @changelog
 || | 1.0 2012-06-04 - Mark Stanley : Initial Release
