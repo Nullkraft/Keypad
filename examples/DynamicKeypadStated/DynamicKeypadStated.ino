@@ -116,7 +116,7 @@ Keypad ltrpad( makeKeymap(alphaKeys), rowPins, colPins, sizeof(rowPins), sizeof(
 
 
 unsigned long startTime;
-const byte ledPin = 13;                            // Use the LED on pin 13.
+const byte ledPin = LED_BUILTIN;                            // Use the LED on pin 13.
 
 void setup() {
     Serial.begin(9600);
