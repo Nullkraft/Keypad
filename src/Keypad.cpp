@@ -175,17 +175,6 @@ void Keypad::nextKeyState(byte idx, boolean button) {
 	}
 }
 
-// New in 2.1
-bool Keypad::isPressed(char keyChar) {
-	for (byte i=0; i<LIST_MAX; i++) {
-		if ( key[i].kchar == keyChar ) {
-			if ( (key[i].kstate == PRESSED) && key[i].stateChanged )
-				return true;
-		}
-	}
-	return false;	// Not pressed.
-}
-
 // Search by character for a key in the list of active keys.
 // Returns -1 if not found or the index into the list of active keys.
 int Keypad::findInList (char keyChar) {
@@ -220,18 +209,6 @@ char Keypad::waitForKey() {
 // Backwards compatibility function.
 KeyState Keypad::getState() {
 	return key[0].kstate;
-}
-
-// The end user can test for any changes in state before deciding
-// if any variables, etc. needs to be updated in their code.
-bool Keypad::keyStateChanged() {
-	return key[0].stateChanged;
-}
-
-// The number of keys on the key list, key[LIST_MAX], equals the number
-// of bytes in the key list divided by the number of bytes in a Key object.
-byte Keypad::numKeys() {
-	return sizeof(key)/sizeof(Key);
 }
 
 // Minimum debounceTime is 1 mS. Any lower *will* slow down the loop().

@@ -95,13 +95,11 @@ private:
 
 public:
 	Key key[LIST_MAX];
-	unsigned long holdTimer;
 
 	char getKey();
 	bool getKeys();
 	KeyState getState();
 	void begin(char *userKeymap);
-	bool isPressed(char keyChar);
 	void setDebounceTime(uint);
 	void setHoldTime(uint);
 	void addEventListener(void (*listener)(char));
@@ -109,8 +107,6 @@ public:
 	int findInList(char keyChar);
 	int findInList(int keyCode);
 	char waitForKey();
-	bool keyStateChanged();
-	byte numKeys();
 
 private:
 	unsigned long startTime;
@@ -120,6 +116,7 @@ private:
 	KeypadSize sizeKpd;
 	uint debounceTime;
 	uint holdTime;
+	unsigned long holdTimer;
 	bool single_key;
 
 	void scanKeys();
