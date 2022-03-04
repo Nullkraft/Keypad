@@ -231,6 +231,12 @@ void Keypad::addStatedEventListener(void (*listener)(char, KeyState)){
 	keypadStatedEventListener = listener;
 }
 
+void Keypad::addOOPEventListener(void (*listener)(void *context, char, KeyState), void *ObjectContext) {
+    keypadOOPEventListener = listener;
+    CallbackTargetObjectContext = ObjectContext;
+}
+
+
 // Private
 void Keypad::transitionTo(byte idx, KeyState nextState) {
 	key[idx].kstate = nextState;
@@ -242,11 +248,10 @@ void Keypad::transitionTo(byte idx, KeyState nextState) {
     if ( (keypadEventListener!=NULL) && (idx==0) )  {
 			keypadEventListener(key[0].kchar);
 		}
-		//call the event listener that contains the key state, if available
-		if ( (keypadStatedEventListener!=NULL) && (idx==0) )
-		{
-			keypadStatedEventListener(key[0].kchar, nextState);
-		}
+    //call the event listener that contains the key state, if available
+    if ( (keypadStatedEventListener!=NULL) && (idx==0) ){
+        keypadStatedEventListener(key[0].kchar, nextState);
+    }
 	}
 	// Sketch used the getKeys() function.
 	// Calls keypadEventListener on any key that changes state.
@@ -254,11 +259,13 @@ void Keypad::transitionTo(byte idx, KeyState nextState) {
   	if (keypadEventListener!=NULL)  {
 			keypadEventListener(key[idx].kchar);
 		}
-		//call the event listener that contains the key state, if available
-		if (keypadStatedEventListener!=NULL)
-		{
-			keypadStatedEventListener(key[idx].kchar, nextState);
-		}
+    //call the event listener that contains the key state, if available
+    if (keypadStatedEventListener!=NULL){
+        keypadStatedEventListener(key[idx].kchar, nextState);
+    }
+    if (keypadOOPEventListener!=NULL){
+        keypadOOPEventListener(CallbackTargetObjectContext,key[idx].kchar, nextState);
+    }
 	}
 }
 
