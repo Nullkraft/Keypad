@@ -224,6 +224,7 @@ void Keypad::setHoldTime(uint hold) {
     holdTime = hold;
 }
 
+// Wait this many ms after setting the output pin before checking the input pins
 void Keypad::setScanTime(uint scan) {
     scanTime = scan;
 }
