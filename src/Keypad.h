@@ -104,6 +104,7 @@ public:
 	void setHoldTime(uint);
 	void addEventListener(void (*listener)(char));
 	void addStatedEventListener(void (*listener)(char, KeyState));
+	void addOOPEventListener(void (*listener)(void *ObjectContext, char, KeyState), void * ObjectContext);
 	int findInList(char keyChar);
 	int findInList(int keyCode);
 	char waitForKey();
@@ -125,6 +126,9 @@ private:
 	void transitionTo(byte n, KeyState nextState);
 	void (*keypadEventListener)(char);
 	void (*keypadStatedEventListener)(char, KeyState);
+    void (*keypadOOPEventListener)(void *, char, KeyState);
+
+    void *CallbackTargetObjectContext;
 };
 
 #endif
