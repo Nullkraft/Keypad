@@ -102,6 +102,7 @@ public:
 	void begin(char *userKeymap);
 	void setDebounceTime(uint);
 	void setHoldTime(uint);
+	void setScanTime(uint);
 	void addEventListener(void (*listener)(char));
 	void addStatedEventListener(void (*listener)(char, KeyState));
 	int findInList(char keyChar);
@@ -116,6 +117,7 @@ private:
 	KeypadSize sizeKpd;
 	uint debounceTime;
 	uint holdTime;
+	uint scanTime;
 	unsigned long holdTimer;
 	bool single_key;
 
