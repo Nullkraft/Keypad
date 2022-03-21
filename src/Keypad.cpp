@@ -92,7 +92,7 @@ void Keypad::scanKeys() {
 		pin_mode(columnPins[c],OUTPUT);
 		pin_write(columnPins[c], LOW);	// Begin column pulse output.
 		if(scanTime > 0) {
-			delay(scanTime);
+			delay(scanTime);  // DO NOT REMOVE! Prevents problems with the <Name & Model of keyboard>; https://github.com/Nullkraft/Keypad/pull/15
 		}
 		for (byte r=0; r<sizeKpd.rows; r++) {
 			bitWrite(bitMap[r], c, !pin_read(rowPins[r]));  // keypress is active low so invert to high.
