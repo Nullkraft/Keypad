@@ -42,6 +42,7 @@ Keypad::Keypad(char *userKeymap, byte *row, byte *col, byte numRows, byte numCol
 
 	setDebounceTime(10);
 	setHoldTime(500);
+	setScanTime(0);
 	keypadEventListener = 0;
 
 	startTime = 0;
@@ -90,6 +91,9 @@ void Keypad::scanKeys() {
 	for (byte c=0; c<sizeKpd.columns; c++) {
 		pin_mode(columnPins[c],OUTPUT);
 		pin_write(columnPins[c], LOW);	// Begin column pulse output.
+		if(scanTime > 0) {
+			delay(scanTime);  // DO NOT REMOVE! Prevents problems with the Joyjoz music mat hack; https://github.com/Nullkraft/Keypad/pull/15
+		}
 		for (byte r=0; r<sizeKpd.rows; r++) {
 			bitWrite(bitMap[r], c, !pin_read(rowPins[r]));  // keypress is active low so invert to high.
 		}
@@ -218,6 +222,11 @@ void Keypad::setDebounceTime(uint debounce) {
 
 void Keypad::setHoldTime(uint hold) {
     holdTime = hold;
+}
+
+// Wait this many ms after setting the output pin before checking the input pins
+void Keypad::setScanTime(uint scan) {
+    scanTime = scan;
 }
 
 void Keypad::addEventListener(void (*listener)(char)){
