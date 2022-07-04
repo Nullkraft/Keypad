@@ -126,9 +126,9 @@ private:
 	bool updateList();
 	void nextKeyState(byte n, boolean button);
 	void transitionTo(byte n, KeyState nextState);
-	void (*keypadEventListener)(char);
-	void (*keypadStatedEventListener)(char, KeyState);
-    void (*keypadOOPEventListener)(void *, char, KeyState);
+	void (*keypadEventListener)(char) = nullptr;
+	void (*keypadStatedEventListener)(char, KeyState) = nullptr;
+    void (*keypadOOPEventListener)(void *, char, KeyState) = nullptr;
 
     void *CallbackTargetObjectContext;
 };
