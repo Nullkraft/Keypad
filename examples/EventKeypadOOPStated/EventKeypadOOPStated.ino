@@ -31,19 +31,16 @@ boolean ledPin_state;
 
 class Menu {
 public:
-    char menuPosition = NULL;
+    char menuPosition = (char)0;
 
-    static void updateMenu(void *context, KeypadEvent key, KeyState kpadState) {
+    void setMenuPosition(char key) { menuPosition = key; }
+
+    static void updateMenu(void *context, char key, KeyState kpadState) {
         if (kpadState == PRESSED) {
             reinterpret_cast<Menu *>(context)->setMenuPosition(key);
         }
-
-        void setMenuPosition(char key) {
-            menuPosition = key
-        }
     };
-}
-
+};
 
 Menu menu;
 
@@ -53,7 +50,9 @@ void setup(){
     digitalWrite(ledPin, HIGH);           // Turn the LED on.
     ledPin_state = digitalRead(ledPin);   // Store initial LED state. HIGH when LED is on.
 
-    keypad.addOOPEventListener(Menu::updateMenu, menu); // Add an event listener for this keypad
+    keypad.addOOPEventListener( // Add an event listener for this keypad
+        Menu::updateMenu,
+        (void *)&menu);
 }
 
 void loop(){
