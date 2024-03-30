@@ -24,8 +24,8 @@ byte colPins[COLS] = {8, 7, 6}; //connect to the column pinouts of the keypad
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 byte ledPin = LED_BUILTIN; 
 
-boolean blink = false;
-boolean ledPin_state;
+bool blink = false;
+bool ledPin_state;
 
 void setup(){
     Serial.begin(9600);
