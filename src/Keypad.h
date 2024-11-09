@@ -87,7 +87,7 @@ public:
 	Keypad(char *userKeymap, byte *row, byte *col, byte numRows, byte numCols);
 
 	virtual void pin_mode(byte pinNum, byte mode) { pinMode(pinNum, mode); }
-	virtual void pin_write(byte pinNum, boolean level) { digitalWrite(pinNum, level); }
+	virtual void pin_write(byte pinNum, bool level) { digitalWrite(pinNum, level); }
 	virtual int  pin_read(byte pinNum) { return digitalRead(pinNum); }
 
 private:
@@ -124,7 +124,7 @@ private:
 
 	void scanKeys();
 	bool updateList();
-	void nextKeyState(byte n, boolean button);
+	void nextKeyState(byte n, bool button);
 	void transitionTo(byte n, KeyState nextState);
 	void (*keypadEventListener)(char) = nullptr;
 	void (*keypadStatedEventListener)(char, KeyState) = nullptr;

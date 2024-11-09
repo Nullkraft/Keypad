@@ -121,7 +121,7 @@ bool Keypad::updateList() {
 	// Add new keys to empty slots in the key list.
 	for (byte r=0; r<sizeKpd.rows; r++) {
 		for (byte c=0; c<sizeKpd.columns; c++) {
-			boolean button = bitRead(bitMap[r],c);
+			bool button = bitRead(bitMap[r],c);
 			char keyChar = keymap[r * sizeKpd.columns + c];
 			int keyCode = r * sizeKpd.columns + c;
 			int idx = findInList (keyCode);
@@ -154,7 +154,7 @@ bool Keypad::updateList() {
 
 // Private
 // This function is a state machine but is also used for debouncing the keys.
-void Keypad::nextKeyState(byte idx, boolean button) {
+void Keypad::nextKeyState(byte idx, bool button) {
 	key[idx].stateChanged = false;
 
 	switch (key[idx].kstate) {

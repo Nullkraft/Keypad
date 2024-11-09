@@ -105,7 +105,7 @@ char numberKeys[ROWS][COLS] = {
   {'*','0','#'}
 };
 
-boolean alpha = false;   // Start with the numeric keypad.
+bool alpha = false;   // Start with the numeric keypad.
 
 byte rowPins[ROWS] = {5, 4, 3, 2}; //connect to the row pinouts of the keypad
 byte colPins[COLS] = {8, 7, 6}; //connect to the column pinouts of the keypad

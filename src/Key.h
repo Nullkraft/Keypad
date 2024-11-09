@@ -54,7 +54,7 @@ public:
 	char kchar;
 	int kcode;
 	KeyState kstate;
-	boolean stateChanged;
+	bool stateChanged;
 
 public:
 	// methods
